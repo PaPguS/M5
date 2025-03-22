@@ -36,6 +36,7 @@ main {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  display: none;
 }
 img {
   aspect-ratio: 1/1;
@@ -53,4 +54,31 @@ i{
     background-color: white;
     padding: 2px;
     color: blue;
+}
+h2{
+  width: fit-content;
+  color: rgb(216, 194, 194);
+}
+nav{
+  height: 100px;
+  width: 100px;
+  border: 15px solid rgb(91, 95, 97);
+  border-radius: 50%;
+  border-bottom-color: rgb(197, 188, 188);
+  animation-name: circle;
+  animation-iteration-count: infinite;
+  animation-duration: 1.7s;
+  animation-timing-function: linear;
+}
+@keyframes circle{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+.none{
+  display: none;
 }
