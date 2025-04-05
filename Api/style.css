@@ -36,12 +36,11 @@ main {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  display: none;
 }
 img {
   aspect-ratio: 1/1;
   object-fit: cover;
-  width: 100px;
+  width: 100;
   border-radius: 10px;
 }
 h1{
