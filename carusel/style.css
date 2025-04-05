@@ -16,8 +16,9 @@ nav {
 
 div{
     display: flex;
-    gap: 10px;
-    transform: translate(-200%);
+    /* gap: 10px; */
+    transform: translate(0%);
+    transition: all 1s;
 }
 
 img{
