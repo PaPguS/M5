@@ -1,57 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-    <style>
-        canvas{
-            border: 10px solid red;
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0.4;
+        z-index: -1;
+    }
+  </style>
+  <body>
+
+    <img src="https://avatars.mds.yandex.net/i?id=2300599773482a53fe6c472c16db5ec0efb35668-3644822-images-thumbs&n=13">
+
+    <canvas id="canvas"></canvas>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerWidth;
+
+      let config = {
+        lineSize: 5,
+        color: "black",
+      };
+
+      let posX = [];
+      let posY = [];
+
+      let draw = false;
+
+      canvas.addEventListener("mousedown", (e) => {
+        draw = true;
+        context.beginPath();
+      });
+
+      canvas.onmousemove = (e) => {
+        console.log(e)
+        mousePos(e)
+      }
+
+      function mousePos(e){
+        if (draw){
+            posX.push(e.clientX)
+            posY.push(e.clientY)
+            drawLine(e.clientX, e.clientY)
+        } else {
+            posX.push(false)
+            posY.push(false)
         }
-    </style>
-    <body>
-        <canvas id="canvas"></canvas>
-        <script>
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = 500;
-            canvas.height = 500;
+      }
+      
+      function drawLine(x, y) {
+        context.lineWidth = config.lineSize
+        context.strokeStyle = config.color
+        context.lineTo(x,y)
+        context.stroke()
+      }
 
-            context.lineWidth = 5
-            context.strokeStyle = "blue"
+      function clearCanvas(){
+        canvas.width = canvas.width
+        canvas.height = canvas.height
+      }
+      
+      function reDraw(){
+        posX.splice(-5)
+        posY.splice(-5)
+        for (let i = 0; i < posX.length; i++) {
+            if (posX[i] == false){
+                context.beginPath()
+            } else {
+                drawLine(posX[i], posY[i])
+            }
 
-            context.beginPath();
-            context.moveTo(50, 50)
-            context.lineTo(450, 50)
-            context.lineTo(450, 450)
-            context.lineTo(50, 450)
-            context.lineTo(50, 50)
+        }
+      }
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.code == "KeyC"){
+            clearCanvas()
+        }
+        if (e.code == "KeyS"){
+            let image = canvas
+                .toDataURL("image/png")
+                .replace("image/png", "image/octet-stream");
+            window.location.href = image;
+        }
+        if (e.code == "KeyZ"){
+            clearCanvas()
+            reDraw()
+        }
+      })
 
-            context.moveTo(100, 100)
-            context.lineTo(400, 100)
-            context.lineTo(400, 400)
-            context.lineTo(100, 400)
-            context.lineTo(100, 100)
-
-            context.moveTo(150, 150)
-            context.lineTo(350, 150)
-            context.lineTo(350, 350)
-            context.lineTo(150, 350)
-            context.lineTo(150, 150)
-            
-            context.moveTo(200, 200)
-            context.lineTo(300, 200)
-            context.lineTo(300, 300)
-            context.lineTo(200, 300)
-            context.lineTo(200, 200)
-
-            context.moveTo(0, 0)
-            context.lineTo(500, 250)
-            context.lineTo(0, 500)
-            context.lineTo(0, 0)
-            
-            context.stroke()
-        </script>
-    </body>
+      context.stroke();
+    </script>
+  </body>
 </html>
